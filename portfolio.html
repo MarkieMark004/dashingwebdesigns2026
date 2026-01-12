@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Dashing Web Designs | Portfolio</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="layout">
+      <aside class="sidebar">
+        <div class="logo">
+          <img src="images/dwd-logo.webp" alt="Dashing Web Designs logo" />
+        </div>
+        <nav aria-label="Primary">
+          <ul class="nav">
+            <li><a href="index.html">Home</a></li>
+            <li><a class="is-active" href="portfolio.html">Portfolio</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </nav>
+      </aside>
+
+      <main class="content">
+        <div class="portfolio-main">
+          <h1 class="portfolio-title">Etta - Personal Dashboard</h1>
+          <div class="portfolio-divider" aria-hidden="true"></div>
+          <div class="portfolio-embed-wrap">
+            <button
+              class="portfolio-arrow portfolio-arrow-left"
+              type="button"
+              aria-label="Previous project"
+            >
+              &lt;
+            </button>
+            <div class="portfolio-embed">
+              <iframe
+                src="https://etta.dashingwebdesigns.com/"
+                title="Etta by Dashing Web Designs"
+                loading="lazy"
+              ></iframe>
+            </div>
+            <button class="portfolio-arrow" type="button" aria-label="Next project">
+              &gt;
+            </button>
+          </div>
+        </div>
+
+        <div class="portfolio-cta-row">
+          <a class="cta cta-left" href="index.html">
+            Home
+            <span class="cta-arrow">→</span>
+          </a>
+          <a class="cta" href="about.html">
+            About
+            <span>→</span>
+          </a>
+        </div>
+      </main>
+    </div>
+    <script src="script.js" defer></script>
+  </body>
+</html>
