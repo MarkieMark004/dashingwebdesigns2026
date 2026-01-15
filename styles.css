@@ -90,6 +90,10 @@ body::after {
   min-height: 100vh;
 }
 
+.content {
+  overflow: hidden;
+}
+
 .sidebar {
   width: 210px;
   background: rgba(78, 78, 78, 0.5);
@@ -199,7 +203,6 @@ body::after {
   flex: 1;
   padding: 120px 80px 80px;
   position: relative;
-  animation: content-in 520ms ease-out both;
   transition: transform 220ms ease, opacity 220ms ease;
 }
 
@@ -437,6 +440,11 @@ body::after {
   margin: 0 0 40px;
 }
 
+.contact-page .contact-columns {
+  max-width: 1100px;
+  margin: 0 auto 40px;
+}
+
 .contact-info {
   display: grid;
   gap: 16px;
@@ -612,32 +620,8 @@ body::after {
   display: inline-block;
   overflow: hidden;
   white-space: nowrap;
-  width: 0;
-  animation: typewriter 1.8s steps(30) forwards;
-}
-
-.headline-line.line-1 {
-  --line-width: 22ch;
-  animation-delay: 0.2s;
-}
-
-.headline-line.line-2 {
-  --line-width: 25ch;
-  animation-delay: 2.2s;
-}
-
-.headline-line.line-3 {
-  --line-width: 14ch;
-  animation-delay: 4.2s;
-}
-
-@keyframes typewriter {
-  from {
-    width: 0;
-  }
-  to {
-    width: var(--line-width);
-  }
+  width: auto;
+  animation: none;
 }
 
 @keyframes content-in {
@@ -650,6 +634,7 @@ body::after {
     transform: translateX(0);
   }
 }
+
 
 .no-typewriter .headline-line {
   width: auto;
@@ -694,7 +679,7 @@ body::after {
   border-radius: 16px;
   background-color: transparent;
   transition: transform 220ms ease, background-color 220ms ease,
-    border-radius 220ms ease, opacity 220ms ease;
+    border-radius 220ms ease, opacity 220ms ease, color 220ms ease;
 }
 
 .home-cta {
@@ -708,12 +693,14 @@ body::after {
   color: #3d3d3d;
   font-size: 30px;
   line-height: 1;
+  transition: color 220ms ease, background-color 220ms ease, opacity 220ms ease;
 }
 
 .cta:hover {
   transform: translateX(10px);
   background-color: rgba(35, 35, 35, 0.65);
   border-radius: 20px;
+  color: var(--accent);
 }
 
 .cta-left:hover {
@@ -1666,5 +1653,44 @@ body::after {
 
   .social-list {
     font-size: 11px;
+  }
+}
+
+body.is-page-exiting .content {
+  animation: page-out 700ms ease forwards;
+}
+
+body.is-page-entering .content {
+  animation: page-in 700ms ease forwards;
+}
+
+body.is-page-exiting,
+body.is-page-entering {
+  overflow: hidden;
+}
+
+body.is-loading .content {
+  opacity: 0;
+}
+
+@keyframes page-in {
+  from {
+    opacity: 0;
+    transform: translateX(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes page-out {
+  from {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(-24px);
   }
 }

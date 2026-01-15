@@ -137,24 +137,28 @@
     initPage(page);
   };
 
-  const navigateTo = (page, trigger) => {
-    const exitClass =
-      trigger && trigger.classList.contains("cta-left")
-        ? "cta-exit-left"
-        : "cta-exit";
+  const runPageTransition = async (page) => {
+    document.body.classList.remove("is-page-entering", "is-page-exiting");
+    document.body.classList.add("is-page-exiting");
+    await new Promise((resolve) => window.setTimeout(resolve, 700));
+    document.body.classList.remove("is-page-exiting");
+    document.body.classList.add("is-loading");
+    await loadPage(page);
+    document.body.classList.remove("is-loading");
+    document.body.classList.add("is-page-entering");
+    window.setTimeout(() => {
+      document.body.classList.remove("is-page-entering");
+    }, 700);
+    updateHash(page);
+  };
 
+  const navigateTo = (page, trigger) => {
     if (trigger && trigger.classList.contains("cta")) {
-      document.body.classList.add(exitClass);
-      window.setTimeout(() => {
-        document.body.classList.remove("cta-exit", "cta-exit-left");
-        loadPage(page);
-        updateHash(page);
-      }, 260);
+      runPageTransition(page);
       return;
     }
 
-    loadPage(page);
-    updateHash(page);
+    runPageTransition(page);
   };
 
   document.addEventListener("click", (event) => {
@@ -183,7 +187,7 @@
       isInternalNav = false;
       return;
     }
-    loadPage(getPageFromHash());
+    runPageTransition(getPageFromHash());
   });
 
   loadPage(getPageFromHash());
