@@ -51,6 +51,10 @@
 
     const projects = [
       {
+        title: "Pig Game",
+        url: "https://www.thepiggame.dashingwebdesigns.com/",
+      },
+      {
         title: "Etta - Personal Dashboard",
         url: "https://etta.dashingwebdesigns.com/",
       },
