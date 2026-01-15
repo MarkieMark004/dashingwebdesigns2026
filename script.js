@@ -121,6 +121,81 @@
     if (page === "portfolio") {
       initPortfolioCarousel();
     }
+    if (page === "contact") {
+      initContactForm();
+    }
+  };
+
+  const initContactForm = () => {
+    const form = document.querySelector(".contact-form");
+    const toast = document.querySelector(".form-toast");
+    const toastText = document.querySelector(".form-toast-text");
+    const toastBtn = document.querySelector(".form-toast-btn");
+
+    if (!form || !toast || !toastText || !toastBtn) {
+      return;
+    }
+
+    if (form.dataset.bound === "true") {
+      return;
+    }
+    form.dataset.bound = "true";
+
+    const hideToast = () => {
+      toast.classList.remove("is-visible");
+      toast.setAttribute("aria-hidden", "true");
+    };
+
+    toastBtn.addEventListener("click", hideToast);
+    toast.addEventListener("click", (event) => {
+      if (event.target === toast) {
+        hideToast();
+      }
+    });
+
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      const tokenInput = form.querySelector(
+        "input[name='g-recaptcha-response']"
+      );
+      const formData = new FormData(form);
+      const action = form.getAttribute("action") || "contact.php";
+
+      try {
+        if (window.grecaptcha && window.grecaptcha.ready) {
+          const token = await new Promise((resolve, reject) => {
+            window.grecaptcha.ready(() => {
+              window.grecaptcha
+                .execute(
+                  "6Le5M0ssAAAAAPvF0k7HWAU_XlH6nVxNDliMGf0K",
+                  { action: "contact" }
+                )
+                .then(resolve)
+                .catch(reject);
+            });
+          });
+          if (tokenInput) {
+            tokenInput.value = token;
+          }
+          formData.set("g-recaptcha-response", token);
+        }
+
+        const response = await fetch(action, {
+          method: "POST",
+          body: formData,
+        });
+        const text = await response.text();
+        toastText.textContent = response.ok ? "Message sent." : text.trim() || "Error sending message.";
+        if (response.ok) {
+          form.reset();
+        }
+      } catch (error) {
+        toastText.textContent = "Error sending message.";
+      }
+
+      toast.classList.add("is-visible");
+      toast.setAttribute("aria-hidden", "false");
+    });
   };
 
   const loadPage = async (page) => {
